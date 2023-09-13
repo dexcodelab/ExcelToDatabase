@@ -66,6 +66,7 @@ namespace ExcelToDatabase.Controllers
                         do
                         {
                             bool isHeaderSkipped = false;
+
                             while (reader.Read())
                             {
                                 if (!isHeaderSkipped)
@@ -75,13 +76,9 @@ namespace ExcelToDatabase.Controllers
                                 }
 
                                 Student s = new Student();
-                                for (int i = 0; i < reader.FieldCount; i++)
-                                {
-                                    if (i == 1)
-                                        s.Name = reader.GetValue(i).ToString();
-                                    else if (i == 2)
-                                        s.Marks = Convert.ToInt32(reader.GetValue(i).ToString());
-                                }
+                                s.Name = reader.GetValue(1).ToString();
+                                s.Marks = Convert.ToInt32(reader.GetValue(2).ToString());
+
                                 _context.Add(s);
                                 await _context.SaveChangesAsync();
                             }
